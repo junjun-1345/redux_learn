@@ -1,21 +1,30 @@
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
+import { increment, decrement, incrementByAmount } from "./redux/counterSlice";
 
 function App() {
+  //storeのcounterの値にアクセスする。
+  const count = useSelector((state) => state.counter.value);
+  //dispatch(Slicer)を呼び出す
+  const dispatch = useDispatch();
+
+  const [incrementAmount, setIncrementAmount] = useState("2");
+
   return (
     <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>count: {count}</h1>
+      <input
+        onChange={(e) => setIncrementAmount(e.target.value)}
+        value={incrementAmount}
+      />
+      <button onClick={() => dispatch(increment())}>＋</button>
+      <button onClick={() => dispatch(decrement())}>−</button>
+      <button
+        onClick={() => dispatch(incrementByAmount(Number(incrementAmount)))}
+      >
+        追加
+      </button>
     </div>
   );
 }
